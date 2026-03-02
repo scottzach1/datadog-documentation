@@ -490,6 +490,8 @@ For each dataset record your task processes, emit an OpenTelemetry span with `ge
 | `run_id` | No | UUID identifying this run. Required alongside `run_iteration` for run-level grouping. |
 | `run_iteration` | No | Integer (starting at 1) identifying which iteration of the run this record belongs to. Required alongside `run_id`. |
 | `dataset_name` | No | Name of the dataset. |
+| `dataset_id` | No | UUID of the dataset, returned from `POST /api/v2/llm-obs/v1/{project_id}/datasets`. |
+| `dataset_record_id` | No | ID of the specific dataset record being processed. Links the span to a record in the dataset. |
 | `project_id` | No | UUID of the project. |
 
 ```python
@@ -547,6 +549,8 @@ for i, record in enumerate(records, start=1):
                 "run_id": run_id,
                 "run_iteration": i,
                 "dataset_name": "capitals-dataset",
+                "dataset_id": dataset_id,
+                "dataset_record_id": record.get("record_id", ""),
                 "project_id": project_id,
             }),
         )
